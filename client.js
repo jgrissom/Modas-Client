@@ -37,6 +37,10 @@ $(function () {
     $('#start').html(p.rangeStart);
     $('#end').html(p.rangeEnd);
     $('#total').html(p.totalItems);
+    $('#first').data('page', 1);
+    $('#next').data('page', p.nextPage);
+    $('#prev').data('page', p.previousPage);
+    $('#last').data('page', p.totalPages);
   }
 
   function initButtons() {
@@ -45,4 +49,9 @@ $(function () {
     // disable next/last buttons when on last page
     $('#last, #next').prop('disabled', $('#end').html() == $('#total').html());
   }
+
+  // event listeners for first/next/prev/last buttons
+  $('#next, #prev, #first, #last').on('click', function () {
+    getEvents($(this).data('page'));
+  });
 });
