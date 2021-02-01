@@ -3,7 +3,7 @@ $(function () {
 
   function getEvents(page) {
     $.getJSON({
-      url: "https://localhost:5001/api/event/pagesize/10/page/" + page,
+      url: "https://modasapi.azurewebsites.net/api/event/pagesize/10/page/" + page,
       success: function (response, textStatus, jqXhr) {
         console.log(response);
       },
