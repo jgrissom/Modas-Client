@@ -8,6 +8,7 @@ $(function () {
         //console.log(response);
         showTableBody(response.events);
         showPagingInfo(response.pagingInfo);
+        initButtons();
       },
       error: function (jqXHR, textStatus, errorThrown) {
         // log the error to the console
@@ -36,5 +37,12 @@ $(function () {
     $('#start').html(p.rangeStart);
     $('#end').html(p.rangeEnd);
     $('#total').html(p.totalItems);
+  }
+
+  function initButtons() {
+    // disable prev/first buttons when on first page
+    $('#first, #prev').prop('disabled', $('#start').html() == "1");
+    // disable next/last buttons when on last page
+    $('#last, #next').prop('disabled', $('#end').html() == $('#total').html());
   }
 });
