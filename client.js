@@ -7,6 +7,7 @@ $(function () {
       success: function (response, textStatus, jqXhr) {
         //console.log(response);
         showTableBody(response.events);
+        showPagingInfo(response.pagingInfo);
       },
       error: function (jqXHR, textStatus, errorThrown) {
         // log the error to the console
@@ -29,5 +30,11 @@ $(function () {
       html += "</tr> ";
     }
     $('tbody').html(html);
+  }
+
+  function showPagingInfo(p) {
+    $('#start').html(p.rangeStart);
+    $('#end').html(p.rangeEnd);
+    $('#total').html(p.totalItems);
   }
 });
