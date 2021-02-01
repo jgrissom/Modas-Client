@@ -10,14 +10,22 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
 </head>
 <body>
-  <div class="container">
+  <!-- navbar -->
+  <nav class="navbar fixed-top navbar-light" style="background-color:#dedede;">
+    <div class="navbar-brand">
+      <i class="fas fa-shield-alt"></i>
+      <span class="d-none d-md-inline" style="font-variant:small-caps;">Moving Object Detection Alert System</span>
+    </div>
+  </nav>
+  <!-- content -->
+  <div class="container" style="margin-top:65px;">
     <table class="table table-sm table-striped table-shadow">
-        <thead class="bg-success text-white">
-            <tr><th class="text-center">Flag</th><th>Date</th><th>Time</th><th>Location</th></tr>
-        </thead>
-        <tbody>
-            <!-- Event data here -->
-        </tbody>
+      <thead class="bg-success text-white">
+          <tr><th class="text-center">Flag</th><th>Date</th><th>Time</th><th>Location</th></tr>
+      </thead>
+      <tbody>
+          <!-- Event data here -->
+      </tbody>
     </table>
     <!-- use AJAX to navigate -->
     <div class="row mb-3">
@@ -35,7 +43,7 @@
         <button disabled id="last" class="btn btn-outline-secondary"><span class="d-none d-md-inline">Last </span><i class="fas fa-angle-double-right"></i></button>
       </div>
     </div>
-</div>
+  </div>
 
   <!-- jQuery framework -->
   <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
