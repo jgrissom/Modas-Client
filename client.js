@@ -82,4 +82,33 @@ $(function () {
   $('#next, #prev, #first, #last').on('click', function () {
     getEvents($(this).data('page'));
   });
+
+  // delegated event handler needed
+  // http://api.jquery.com/on/#direct-and-delegated-events
+  $('tbody').on('click', '.flag', function () {
+    var checked;
+    if ($(this).data('checked')) {
+      $(this).data('checked', false);
+      $(this).removeClass('fas').addClass('far');
+      checked = false;
+    } else {
+      $(this).data('checked', true);
+      $(this).removeClass('far').addClass('fas');
+      checked = true;
+    }
+    // AJAX to update database
+    $.ajax({
+      headers: { "Content-Type": "application/json" },
+      url: "https://modasapi.azurewebsites.net/api/event/" + $(this).data('id'),
+      type: 'patch',
+      data: JSON.stringify([{ "op": "replace", "path": "Flagged", "value": checked }]),
+      success: function () {
+        console.log("success");
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        // log the error to the console
+        console.log("The following error occured: " + jqXHR.status, errorThrown);
+      }
+    });
+  });
 });
