@@ -1,6 +1,7 @@
 $(function () {
   getEvents(1);
   var toasts = [];
+  var refreshInterval;
 
   function getEvents(page) {
     $.getJSON({
@@ -16,6 +17,10 @@ $(function () {
         console.log("The following error occured: " + textStatus, errorThrown);
       }
     });
+  }
+
+  function refreshEvents(){
+    console.log($('#current').data('val'));
   }
 
   function showTableBody(e) {
@@ -45,6 +50,7 @@ $(function () {
     $('#next').data('page', p.nextPage);
     $('#prev').data('page', p.previousPage);
     $('#last').data('page', p.totalPages);
+    $('#current').data('val', p.currentPage);
   }
 
   function initButtons() {
@@ -108,11 +114,17 @@ $(function () {
     if ($('#auto-refresh').data('val')) {
       // display checked icon
       $('#auto-refresh i').removeClass('fa-square').addClass('fa-check-square');
+      // start timer
+      refreshInterval = setInterval(refreshEvents, 2000);
     } else {
       // display unchecked icon
       $('#auto-refresh i').removeClass('fa-check-square').addClass('fa-square');
+      // if the timer is on, clear it
+      if (refreshInterval) {
+          clearInterval(refreshInterval);
+      }
     }
-  }
+}
 
   // event listeners for first/next/prev/last buttons
   $('#next, #prev, #first, #last').on('click', function () {
