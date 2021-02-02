@@ -20,7 +20,8 @@ $(function () {
   }
 
   function refreshEvents(){
-    console.log($('#current').data('val'));
+    //console.log($('#current').data('val'));
+    getEvents($('#current').data('val'));
   }
 
   function showTableBody(e) {
