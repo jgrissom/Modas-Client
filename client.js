@@ -103,6 +103,17 @@ $(function () {
     });
   }
 
+  function initAutoRefresh(){
+    // if auto-refresh button is set to true
+    if ($('#auto-refresh').data('val')) {
+      // display checked icon
+      $('#auto-refresh i').removeClass('fa-square').addClass('fa-check-square');
+    } else {
+      // display unchecked icon
+      $('#auto-refresh i').removeClass('fa-check-square').addClass('fa-square');
+    }
+  }
+
   // event listeners for first/next/prev/last buttons
   $('#next, #prev, #first, #last').on('click', function () {
     getEvents($(this).data('page'));
@@ -136,5 +147,11 @@ $(function () {
         console.log("The following error occured: " + jqXHR.status, errorThrown);
       }
     });
+  });
+
+  // event listener to toggle data auto-refresh
+  $('#auto-refresh').on('click', function () {
+    $(this).data('val', !($(this).data('val')));
+    initAutoRefresh();
   });
 });
