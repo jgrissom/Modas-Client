@@ -2,6 +2,7 @@ $(function () {
   getEvents(1);
   var toasts = [];
   var refreshInterval;
+  var snd = new Audio("bell.wav"); // buffers automatically when created
 
   function getEvents(page) {
     $.getJSON({
@@ -25,6 +26,10 @@ $(function () {
       success: function (response, textStatus, jqXhr) {
         if (response != $('#total').html()) {
           console.log("success");
+          // Toast
+          toast("Motion Detected", "New motion alert detected!", "fas fa-user-secret");
+          // play sound effect
+          snd.play();
           getEvents($('#current').data('val'));
         }
       },
