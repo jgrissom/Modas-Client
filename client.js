@@ -19,9 +19,20 @@ $(function () {
     });
   }
 
-  function refreshEvents(){
-    //console.log($('#current').data('val'));
-    getEvents($('#current').data('val'));
+  function refreshEvents() {
+    $.getJSON({
+      url: "https://modasapi.azurewebsites.net/api/event/count",
+      success: function (response, textStatus, jqXhr) {
+        if (response != $('#total').html()) {
+          console.log("success");
+          getEvents($('#current').data('val'));
+        }
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        // log the error to the console
+        console.log("The following error occured: " + jqXHR.status, errorThrown);
+      }
+    });
   }
 
   function showTableBody(e) {
