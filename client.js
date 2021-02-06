@@ -166,7 +166,14 @@ $(function () {
           clearInterval(refreshInterval);
       }
     }
-}
+  }
+
+  function showErrors(errors){
+    for (var i = 0; i < errors.length; i++){
+        // apply bootstrap is-invalid class to any field with errors
+        errors[i].addClass('is-invalid');;
+    }
+  }
 
   // event listeners for first/next/prev/last buttons
   $('#next, #prev, #first, #last').on('click', function () {
@@ -231,23 +238,40 @@ $(function () {
   $('#submitButton').on('click', function(e){
     e.preventDefault();
 
-    // verify username and password using the token api
-    $.ajax({
-      headers: { 'Content-Type': 'application/json' },
-      url: "https://modasapi.azurewebsites.net/api/token",
-      type: 'post',
-      data: JSON.stringify({ "username": $('#username').val(), "password": $('#password').val() }),
-      success: function (data) {
-        // save token in a cookie
-        Cookies.set('token', data["token"], { expires: 7 });
-        // hide modal
-        $('#signInModal').modal('hide');
-        verifyToken();
-      },
-      error: function (jqXHR, textStatus, errorThrown) {
-        // log the error to the console
-        console.log("The following error occured: " + jqXHR.status, errorThrown);
-      }
-    });
+    // reset any fields marked with errors
+    $('.form-control').removeClass('is-invalid');
+    // create an empty errors array
+    var errors = [];
+    // check for empty username
+    if ($('#username').val().length == 0){
+      errors.push($('#username'));
+    }
+    // check for empty password
+    if ($('#password').val().length == 0){
+      errors.push($('#password'));
+    }
+    // username and/or password empty, display errors
+    if (errors.length > 0){
+      showErrors(errors);
+    } else {
+      // verify username and password using the token api
+      $.ajax({
+        headers: { 'Content-Type': 'application/json' },
+        url: "https://modasapi.azurewebsites.net/api/token",
+        type: 'post',
+        data: JSON.stringify({ "username": $('#username').val(), "password": $('#password').val() }),
+        success: function (data) {
+          // save token in a cookie
+          Cookies.set('token', data["token"], { expires: 7 });
+          // hide modal
+          $('#signInModal').modal('hide');
+          verifyToken();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          // log the error to the console
+          console.log("The following error occured: " + jqXHR.status, errorThrown);
+        }
+      });
+    }
   });
 });
