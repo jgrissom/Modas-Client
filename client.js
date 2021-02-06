@@ -183,4 +183,10 @@ $(function () {
     $(this).data('val', !($(this).data('val')));
     initAutoRefresh();
   });
+
+  $('#signIn a').on('click', function(e){
+    e.preventDefault();
+    // display modal
+    $('#signInModal').modal();
+  });
 });
