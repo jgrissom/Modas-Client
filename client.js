@@ -189,4 +189,25 @@ $(function () {
     // display modal
     $('#signInModal').modal();
   });
+
+  $('#submitButton').on('click', function(e){
+    e.preventDefault();
+
+    // verify username and password using the token api
+    $.ajax({
+      headers: { 'Content-Type': 'application/json' },
+      url: "https://modasapi.azurewebsites.net/api/token",
+      type: 'post',
+      data: JSON.stringify({ "username": $('#username').val(), "password": $('#password').val() }),
+      success: function (data) {
+        console.log(data["token"]);
+        // hide modal
+        $('#signInModal').modal('hide');
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        // log the error to the console
+        console.log("The following error occured: " + jqXHR.status, errorThrown);
+      }
+    });
+  });
 });
